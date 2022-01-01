@@ -304,6 +304,24 @@ p {
   border: 1px solid black;
 }
 
-/* .padding-for-p {
-  padding-left: 60px;
-} */
+.wood-background {
+  background-image: url(https://www.chessusa.com/mm5/graphics/00000001/wal.jpg);
+  background-repeat: no-repeat;
+}
+
+.light-wood-background {
+  background-image: url(https://www.chessusa.com/mm5/graphics/00000001/erable.jpg);
+  background-repeat: no-repeat;
+}
+
+.resize {
+  width: 50px;
+  position: relative;
+  left: 3px;
+  top: 1px;
+}
+
+.highlight {
+  background: skyblue;
+  opacity: 0.8;
+}
