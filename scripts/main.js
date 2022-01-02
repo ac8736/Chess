@@ -130,8 +130,7 @@ function possiblePawnMoves(pawn) {
       document.getElementById(id).addEventListener("click", move);
     });
     return;
-  }
-  if (pawn.boardPlace[1] === "7") {
+  } else if (pawn.boardPlace[1] === "7") {
     availableMoves.push(
       (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
     );
@@ -144,23 +143,44 @@ function possiblePawnMoves(pawn) {
       document.getElementById(id).addEventListener("click", move);
     });
     return;
+  } else if (pawn.boardPlace[1] !== "2" || pawn.boardPlace[1] !== "7") {
+    if (pawn.color == "white") {
+      availableMoves.push(
+        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
+      );
+    } else {
+      availableMoves.push(
+        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
+      );
+    }
+    availableMoves.forEach((id) => {
+      highlightedPlaces.push(id);
+      document.getElementById(id).classList.add("highlight");
+      document.getElementById(id).addEventListener("click", move);
+    });
+    return;
   }
 }
 
 function move() {
   let currentPos = currentPiece.boardPlace;
   let newPos = this.id;
+  currentPiece.boardPlace = newPos;
+  document.getElementById(currentPos).removeAttribute("has-piece");
   let myElement = document.getElementById(currentPos);
   myElement.removeChild(myElement.children[0]);
   let newPiece = document.createElement("img");
   if (currentPiece.color == "white") {
     newPiece.src = "../sprites/WhitePawn.png";
+    document.getElementById(newPos).setAttribute("has-piece", "white");
   } else {
     newPiece.src = "../sprites/BlackPawn.png";
+    document.getElementById(newPos).setAttribute("has-piece", "black");
   }
   newPiece.classList.add("resize");
   document.getElementById(newPos).appendChild(newPiece);
   removeHighlightedPlaces();
+  initalizePieces();
 }
 
 function findPossibleMoves(id) {
