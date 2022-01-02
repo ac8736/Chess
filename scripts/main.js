@@ -107,7 +107,11 @@ function removeHighlightedPlaces() {
   if (highlightedPlaces.length !== 0) {
     highlightedPlaces.forEach((id) => {
       document.getElementById(id).classList.remove("highlight");
+      if (document.getElementById(id).classList.contains("red-highlight")) {
+        document.getElementById(id).classList.remove("red-highlight");
+      }
       document.getElementById(id).removeEventListener("click", move);
+      document.getElementById(id).removeEventListener("click", destroy);
     });
   }
 }
@@ -115,6 +119,92 @@ function removeHighlightedPlaces() {
 function possiblePawnMoves(pawn) {
   removeHighlightedPlaces();
   let availableMoves = [];
+  if (pawn.color == "white") {
+    const topleft = () => {
+      let numGrid = parseInt(pawn.boardPlace[1]) + 1;
+      let alphaGrid = String.fromCharCode(pawn.boardPlace[0].charCodeAt(0) - 1);
+      if (alphaGrid < "a") {
+        return "";
+      }
+      return alphaGrid + numGrid;
+    };
+    const topright = () => {
+      let numGrid = parseInt(pawn.boardPlace[1]) + 1;
+      let alphaGrid = String.fromCharCode(pawn.boardPlace[0].charCodeAt(0) + 1);
+      if (alphaGrid > "h") {
+        return "";
+      }
+      return alphaGrid + numGrid;
+    };
+    if (topleft() != "") {
+      let myElement = document.getElementById(topleft());
+      if (myElement.children.length != 0) {
+        if (
+          myElement.children[0].tagName == "IMG" &&
+          myElement.getAttribute("has-piece") == "black"
+        ) {
+          myElement.classList.add("red-highlight");
+          availableMoves.push(topleft());
+        }
+      }
+    }
+    if (topright() != "") {
+      let myElement = document.getElementById(topright());
+      if (myElement.children.length != 0) {
+        if (
+          myElement.children[0].tagName == "IMG" &&
+          myElement.getAttribute("has-piece") == "black"
+        ) {
+          myElement.classList.add("red-highlight");
+          availableMoves.push(topright());
+        }
+      }
+    }
+  }
+  if (pawn.color == "black") {
+    const bottomleft = () => {
+      let numGrid = parseInt(pawn.boardPlace[1]) - 1;
+      let alphaGrid = String.fromCharCode(pawn.boardPlace[0].charCodeAt(0) - 1);
+      if (alphaGrid < "a") {
+        return "";
+      }
+      return alphaGrid + numGrid;
+    };
+    const bottomright = () => {
+      let numGrid = parseInt(pawn.boardPlace[1]) - 1;
+      let alphaGrid = String.fromCharCode(pawn.boardPlace[0].charCodeAt(0) + 1);
+      if (alphaGrid > "h") {
+        return "";
+      }
+      return alphaGrid + numGrid;
+    };
+    if (bottomleft() != "") {
+      let myElement = document.getElementById(bottomleft());
+      if (myElement.children.length != 0) {
+        if (
+          myElement.children[0].tagName == "IMG" &&
+          myElement.getAttribute("has-piece") == "white"
+        ) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          availableMoves.push(bottomleft());
+        }
+      }
+    }
+    if (bottomright() != "") {
+      let myElement = document.getElementById(bottomright());
+      if (myElement.children.length != 0) {
+        if (
+          myElement.children[0].tagName == "IMG" &&
+          myElement.getAttribute("has-piece") == "white"
+        ) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          availableMoves.push(bottomright());
+        }
+      }
+    }
+  }
   if (pawn.boardPlace[1] === "2") {
     availableMoves.push(
       (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
@@ -179,6 +269,10 @@ function move() {
   document.getElementById(newPos).appendChild(newPiece);
   removeHighlightedPlaces();
   initalizePieces();
+}
+
+function destroy() {
+  return;
 }
 
 function findPossibleMoves(id) {

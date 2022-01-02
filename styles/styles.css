@@ -322,6 +322,11 @@ p {
 }
 
 .highlight {
-  background: skyblue;
-  opacity: 0.8;
+  background-color: skyblue;
+  opacity: 0.5;
+}
+
+.red-highlight {
+  background: lightcoral;
+  opacity: 0.9;
 }
