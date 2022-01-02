@@ -24,8 +24,6 @@
 // .classList.add() to add a class
 
 //window.onload = test;
-var allWhitePieces;
-var allBlackPieces;
 
 function ChessPiece(pieceType, color, boardPlace) {
   this.pieceType = pieceType;
@@ -207,14 +205,14 @@ function findPossibleMoves(id) {
 }
 
 function initalizePieces() {
-  allWhitePieces = document.querySelectorAll("div[has-piece='white']");
+  var allWhitePieces = document.querySelectorAll("div[has-piece='white']");
   allWhitePieces.forEach(function (element) {
     element.addEventListener("click", function () {
       findPossibleMoves(element.id);
     });
   });
 
-  allBlackPieces = document.querySelectorAll("div[has-piece='black']");
+  var allBlackPieces = document.querySelectorAll("div[has-piece='black']");
   allBlackPieces.forEach(function (element) {
     element.addEventListener("click", function () {
       findPossibleMoves(element.id);
