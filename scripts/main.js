@@ -303,7 +303,7 @@ function possiblePawnMoves(pawn) {
   }
 }
 
-function findPossibleKnightMoves(knight) {
+function findKnightMoves(knight) {
   removeHighlightedPlaces();
   let availableMoves = [];
   let numPlace = parseInt(knight.boardPlace[1]);
@@ -312,115 +312,126 @@ function findPossibleKnightMoves(knight) {
   if (numPlace + 2 < 9) {
     // good
     if (String.fromCharCode(alphaPlace.charCodeAt(0) + 1) <= "h") {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
-            (numPlace + 2).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
-            (numPlace + 2).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
+          (numPlace + 2).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
     if (String.fromCharCode(alphaPlace.charCodeAt(0) - 1) >= "a") {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
-            (numPlace + 2).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
-            (numPlace + 2).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
+          (numPlace + 2).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
   }
+
   if (numPlace - 2 > 0) {
     // good
     if (String.fromCharCode(alphaPlace.charCodeAt(0) + 1) <= "h") {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
-            (numPlace - 2).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
-            (numPlace - 2).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
+          (numPlace - 2).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
     if (String.fromCharCode(alphaPlace.charCodeAt(0) - 1) >= "a") {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
-            (numPlace - 2).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
-            (numPlace - 2).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
+          (numPlace - 2).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
   }
+
   if (String.fromCharCode(alphaPlace.charCodeAt(0) + 2) <= "h") {
     // good
     if (numPlace + 1 < 9) {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
-            (numPlace + 1).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
-            (numPlace + 1).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
+          (numPlace + 1).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
     if (numPlace - 1 > 0) {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
-            (numPlace - 1).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
-            (numPlace - 1).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
+          (numPlace - 1).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
   }
+
   if (String.fromCharCode(alphaPlace.charCodeAt(0) - 2) >= "a") {
     if (numPlace + 1 < 9) {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
-            (numPlace + 1).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
-            (numPlace + 1).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
+          (numPlace + 1).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
     if (numPlace - 1 > 0) {
-      if (
-        document.getElementById(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
-            (numPlace - 1).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
-            (numPlace - 1).toString()
-        );
+      var myElement = document.getElementById(
+        String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
+          (numPlace - 1).toString()
+      );
+      if (myElement.children.length == 0) {
+        availableMoves.push(myElement.id);
+      } else if (knight.color != myElement.getAttribute("has-piece")) {
+        myElement.classList.add("red-highlight");
+        myElement.addEventListener("click", destroy);
+        myElement.removeEventListener("click", findPossibleMoves);
+        highlightedPlaces.push(myElement.id);
       }
     }
   }
@@ -530,6 +541,7 @@ function destroy() {
         newPiece.src = "../sprites/WhiteQueen.png";
         break;
     }
+    document.getElementById(newPos).setAttribute("has-piece", "white");
   } else {
     switch (currentPiece.pieceType) {
       case "pawn":
@@ -551,6 +563,7 @@ function destroy() {
         newPiece.src = "../sprites/BlackQueen.png";
         break;
     }
+    document.getElementById(newPos).setAttribute("has-piece", "black");
   }
   newPiece.classList.add("resize");
   deadElement.appendChild(newPiece);
@@ -570,10 +583,11 @@ function findPossibleMoves() {
       break;
     case "knight":
       currentPiece = selectedPiece;
-      findPossibleKnightMoves(selectedPiece);
+      findKnightMoves(selectedPiece);
       break;
     case "bishop":
       currentPiece = selectedPiece;
+      findRookMoves(selectedPiece);
       break;
     case "rook":
       currentPiece = selectedPiece;
