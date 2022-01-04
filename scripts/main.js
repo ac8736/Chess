@@ -114,6 +114,14 @@ function removeHighlightedPlaces() {
       document.getElementById(id).removeEventListener("click", destroy);
     });
   }
+  highlightedPlaces.splice(0, highlightedPlaces.length);
+}
+
+function removeAllEvents() {
+  var allElements = document.querySelectorAll("div[has-piece]");
+  allElements.forEach(function (element) {
+    element.removeEventListener("click", findPossibleMoves);
+  });
 }
 
 function possiblePawnMoves(pawn) {
@@ -144,7 +152,9 @@ function possiblePawnMoves(pawn) {
           myElement.getAttribute("has-piece") == "black"
         ) {
           myElement.classList.add("red-highlight");
-          availableMoves.push(topleft());
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(topleft());
         }
       }
     }
@@ -156,7 +166,9 @@ function possiblePawnMoves(pawn) {
           myElement.getAttribute("has-piece") == "black"
         ) {
           myElement.classList.add("red-highlight");
-          availableMoves.push(topright());
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(topright());
         }
       }
     }
@@ -187,7 +199,8 @@ function possiblePawnMoves(pawn) {
         ) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          availableMoves.push(bottomleft());
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(bottomleft());
         }
       }
     }
@@ -200,84 +213,355 @@ function possiblePawnMoves(pawn) {
         ) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          availableMoves.push(bottomright());
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(bottomright());
         }
       }
     }
   }
-  if (pawn.boardPlace[1] === "2") {
-    availableMoves.push(
-      (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
-    );
-    availableMoves.push(
-      (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString()
-    );
-    availableMoves.forEach((id) => {
-      highlightedPlaces.push(id);
-      document.getElementById(id).classList.add("highlight");
-      document.getElementById(id).addEventListener("click", move);
-    });
-    return;
-  } else if (pawn.boardPlace[1] === "7") {
-    availableMoves.push(
-      (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
-    );
-    availableMoves.push(
-      (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString()
-    );
-    availableMoves.forEach((id) => {
-      highlightedPlaces.push(id);
-      document.getElementById(id).classList.add("highlight");
-      document.getElementById(id).addEventListener("click", move);
-    });
-    return;
-  } else if (pawn.boardPlace[1] !== "2" || pawn.boardPlace[1] !== "7") {
-    if (pawn.color == "white") {
+  if (pawn.boardPlace[1] === "2" && pawn.color == "white") {
+    if (
+      document.getElementById(
+        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
+      ).children.length == 0
+    ) {
       availableMoves.push(
         (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
       );
-    } else {
+      if (
+        document.getElementById(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString()
+        );
+      }
+    }
+    if (availableMoves.length != 0) {
+      availableMoves.forEach((id) => {
+        highlightedPlaces.push(id);
+        document.getElementById(id).classList.add("highlight");
+        document.getElementById(id).addEventListener("click", move);
+      });
+    }
+    return;
+  } else if (pawn.boardPlace[1] === "7" && pawn.color == "black") {
+    if (
+      document.getElementById(
+        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
+      ).children.length == 0
+    ) {
       availableMoves.push(
         (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
       );
+      if (
+        document.getElementById(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString()
+        );
+      }
+    }
+    if (availableMoves.length != 0) {
+      availableMoves.forEach((id) => {
+        highlightedPlaces.push(id);
+        document.getElementById(id).classList.add("highlight");
+        document.getElementById(id).addEventListener("click", move);
+      });
+    }
+    return;
+  } else if (pawn.boardPlace[1] !== "2" || pawn.boardPlace[1] !== "7") {
+    if (pawn.color == "white") {
+      if (
+        document.getElementById(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
+        );
+      }
+    } else {
+      if (
+        document.getElementById(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
+        );
+      }
     }
     availableMoves.forEach((id) => {
       highlightedPlaces.push(id);
       document.getElementById(id).classList.add("highlight");
       document.getElementById(id).addEventListener("click", move);
     });
-    return;
   }
+}
+
+function findPossibleKnightMoves(knight) {
+  removeHighlightedPlaces();
+  let availableMoves = [];
+  let numPlace = parseInt(knight.boardPlace[1]);
+  let alphaPlace = knight.boardPlace[0];
+
+  if (numPlace + 2 < 9) {
+    // good
+    if (String.fromCharCode(alphaPlace.charCodeAt(0) + 1) <= "h") {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
+            (numPlace + 2).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
+            (numPlace + 2).toString()
+        );
+      }
+    }
+    if (String.fromCharCode(alphaPlace.charCodeAt(0) - 1) >= "a") {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
+            (numPlace + 2).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
+            (numPlace + 2).toString()
+        );
+      }
+    }
+  }
+  if (numPlace - 2 > 0) {
+    // good
+    if (String.fromCharCode(alphaPlace.charCodeAt(0) + 1) <= "h") {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
+            (numPlace - 2).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
+            (numPlace - 2).toString()
+        );
+      }
+    }
+    if (String.fromCharCode(alphaPlace.charCodeAt(0) - 1) >= "a") {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
+            (numPlace - 2).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
+            (numPlace - 2).toString()
+        );
+      }
+    }
+  }
+  if (String.fromCharCode(alphaPlace.charCodeAt(0) + 2) <= "h") {
+    // good
+    if (numPlace + 1 < 9) {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
+            (numPlace + 1).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
+            (numPlace + 1).toString()
+        );
+      }
+    }
+    if (numPlace - 1 > 0) {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
+            (numPlace - 1).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
+            (numPlace - 1).toString()
+        );
+      }
+    }
+  }
+  if (String.fromCharCode(alphaPlace.charCodeAt(0) - 2) >= "a") {
+    if (numPlace + 1 < 9) {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
+            (numPlace + 1).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
+            (numPlace + 1).toString()
+        );
+      }
+    }
+    if (numPlace - 1 > 0) {
+      if (
+        document.getElementById(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
+            (numPlace - 1).toString()
+        ).children.length == 0
+      ) {
+        availableMoves.push(
+          String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
+            (numPlace - 1).toString()
+        );
+      }
+    }
+  }
+
+  availableMoves.forEach((id) => {
+    highlightedPlaces.push(id);
+    document.getElementById(id).classList.add("highlight");
+    document.getElementById(id).addEventListener("click", move);
+  });
 }
 
 function move() {
+  removeAllEvents();
+  removeHighlightedPlaces();
   let currentPos = currentPiece.boardPlace;
   let newPos = this.id;
-  currentPiece.boardPlace = newPos;
-  document.getElementById(currentPos).removeAttribute("has-piece");
-  let myElement = document.getElementById(currentPos);
-  myElement.removeChild(myElement.children[0]);
-  let newPiece = document.createElement("img");
-  if (currentPiece.color == "white") {
-    newPiece.src = "../sprites/WhitePawn.png";
-    document.getElementById(newPos).setAttribute("has-piece", "white");
-  } else {
-    newPiece.src = "../sprites/BlackPawn.png";
-    document.getElementById(newPos).setAttribute("has-piece", "black");
+  if (document.getElementById(newPos).children.length == 0) {
+    currentPiece.boardPlace = newPos;
+    document.getElementById(currentPos).removeAttribute("has-piece");
+    let myElement = document.getElementById(currentPos);
+    myElement.removeChild(myElement.children[0]);
+    let newPiece = document.createElement("img");
+    if (currentPiece.color == "white") {
+      switch (currentPiece.pieceType) {
+        case "pawn":
+          newPiece.src = "../sprites/WhitePawn.png";
+          break;
+        case "knight":
+          newPiece.src = "../sprites/WhiteKnight.png";
+          break;
+        case "bishop":
+          newPiece.src = "../sprites/WhiteBishop.png";
+          break;
+        case "rook":
+          newPiece.src = "../sprites/WhiteRook.png";
+          break;
+        case "king":
+          newPiece.src = "../sprites/WhiteKing.png";
+          break;
+        case "queen":
+          newPiece.src = "../sprites/WhiteQueen.png";
+          break;
+      }
+      document.getElementById(newPos).setAttribute("has-piece", "white");
+    } else {
+      switch (currentPiece.pieceType) {
+        case "pawn":
+          newPiece.src = "../sprites/BlackPawn.png";
+          break;
+        case "knight":
+          newPiece.src = "../sprites/BlackKnight.png";
+          break;
+        case "bishop":
+          newPiece.src = "../sprites/BlackBishop.png";
+          break;
+        case "rook":
+          newPiece.src = "../sprites/BlackRook.png";
+          break;
+        case "king":
+          newPiece.src = "../sprites/BlackKing.png";
+          break;
+        case "queen":
+          newPiece.src = "../sprites/BlackQueen.png";
+          break;
+      }
+      document.getElementById(newPos).setAttribute("has-piece", "black");
+    }
+    newPiece.classList.add("resize");
+    document.getElementById(newPos).appendChild(newPiece);
+    initalizePieces();
   }
-  newPiece.classList.add("resize");
-  document.getElementById(newPos).appendChild(newPiece);
-  removeHighlightedPlaces();
-  initalizePieces();
 }
 
 function destroy() {
-  return;
+  let currentPos = currentPiece.boardPlace;
+  let newPos = this.id;
+  for (let i = 0; i < collectionOfPieces.length; i++) {
+    if (collectionOfPieces[i].boardPlace == newPos) {
+      collectionOfPieces.splice(i, 1);
+      break;
+    }
+  }
+  let myElement = document.getElementById(currentPos);
+  let deadElement = document.getElementById(newPos);
+  myElement.removeChild(myElement.children[0]);
+  deadElement.removeChild(deadElement.children[0]);
+  currentPiece.boardPlace = newPos;
+  let newPiece = document.createElement("img");
+  if (currentPiece.color == "white") {
+    switch (currentPiece.pieceType) {
+      case "pawn":
+        newPiece.src = "../sprites/WhitePawn.png";
+        break;
+      case "knight":
+        newPiece.src = "../sprites/WhiteKnight.png";
+        break;
+      case "bishop":
+        newPiece.src = "../sprites/WhiteBishop.png";
+        break;
+      case "rook":
+        newPiece.src = "../sprites/WhiteRook.png";
+        break;
+      case "king":
+        newPiece.src = "../sprites/WhiteKing.png";
+        break;
+      case "queen":
+        newPiece.src = "../sprites/WhiteQueen.png";
+        break;
+    }
+  } else {
+    switch (currentPiece.pieceType) {
+      case "pawn":
+        newPiece.src = "../sprites/BlackPawn.png";
+        break;
+      case "knight":
+        newPiece.src = "../sprites/BlackKnight.png";
+        break;
+      case "bishop":
+        newPiece.src = "../sprites/BlackBishop.png";
+        break;
+      case "rook":
+        newPiece.src = "../sprites/BlackRook.png";
+        break;
+      case "king":
+        newPiece.src = "../sprites/BlackKing.png";
+        break;
+      case "queen":
+        newPiece.src = "../sprites/BlackQueen.png";
+        break;
+    }
+  }
+  newPiece.classList.add("resize");
+  deadElement.appendChild(newPiece);
+  removeHighlightedPlaces();
+  removeAllEvents();
+  initalizePieces();
 }
 
-function findPossibleMoves(id) {
+function findPossibleMoves() {
   const selectedPiece = collectionOfPieces.find(
-    (element) => element.boardPlace === id
+    (element) => element.boardPlace === this.id
   );
   switch (selectedPiece.pieceType) {
     case "pawn":
@@ -285,14 +569,20 @@ function findPossibleMoves(id) {
       possiblePawnMoves(selectedPiece);
       break;
     case "knight":
+      currentPiece = selectedPiece;
+      findPossibleKnightMoves(selectedPiece);
       break;
     case "bishop":
+      currentPiece = selectedPiece;
       break;
     case "rook":
+      currentPiece = selectedPiece;
       break;
     case "king":
+      currentPiece = selectedPiece;
       break;
     case "queen":
+      currentPiece = selectedPiece;
       break;
   }
   return;
@@ -301,16 +591,14 @@ function findPossibleMoves(id) {
 function initalizePieces() {
   var allWhitePieces = document.querySelectorAll("div[has-piece='white']");
   allWhitePieces.forEach(function (element) {
-    element.addEventListener("click", function () {
-      findPossibleMoves(element.id);
-    });
+    findPossibleMoves.bind(element);
+    element.addEventListener("click", findPossibleMoves);
   });
 
   var allBlackPieces = document.querySelectorAll("div[has-piece='black']");
   allBlackPieces.forEach(function (element) {
-    element.addEventListener("click", function () {
-      findPossibleMoves(element.id);
-    });
+    findPossibleMoves.bind(element);
+    element.addEventListener("click", findPossibleMoves);
   });
 }
 
