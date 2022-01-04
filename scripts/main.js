@@ -1,30 +1,3 @@
-// querySelectorAll("div[has-piece]");
-
-// const place = document.getElementById("a2");
-// place.addEventListener("click", function () {
-//   document.getElementById("a3").classList.add("moveable");
-// });
-
-// function move() {
-//   if (document.getElementById("a3").classList.contains("moveable")) {
-//     place.removeChild(place.children[0]);
-//     let img = document.createElement("img");
-//     img.src = "../sprites/whitePawn.png";
-//     img.classList.add("resize");
-//     document.getElementById("a3").appendChild(img);
-//   }
-// }
-
-// function move() {
-//   const pieces = document.querySelectorAll("div[has-piece]"); //returns a list of all the divs with a attribute has-piece
-//   pieces[0].removeChild(pieces[0].children[0]);  // .children returns a list of all the children of a node
-// }
-
-// appendChild() to add a child element, first do createElement('element name')
-// .classList.add() to add a class
-
-//window.onload = test;
-
 function ChessPiece(pieceType, color, boardPlace) {
   this.pieceType = pieceType;
   this.color = color;
@@ -443,6 +416,109 @@ function findKnightMoves(knight) {
   });
 }
 
+function findRookMoves(rook) {
+  removeHighlightedPlaces();
+  let availableMoves = [];
+  let collided = false;
+  let pos = rook.boardPlace;
+  let i = 1;
+  while (!collided) {
+    let newNum = (parseInt(pos[1]) + i).toString();
+    let id = pos[0] + newNum;
+    let myElement = document.getElementById(id);
+    if (newNum <= "8") {
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (rook.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(myElement.id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  collided = false;
+  i = 1;
+  while (!collided) {
+    let newNum = (parseInt(pos[1]) - i).toString();
+    let id = pos[0] + newNum;
+    let myElement = document.getElementById(id);
+    if (newNum >= "1") {
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (rook.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(myElement.id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  collided = false;
+  i = 1;
+  while (!collided) {
+    let newAlpha = String.fromCharCode(pos[0].charCodeAt(0) + i);
+    let id = newAlpha + pos[1];
+    let myElement = document.getElementById(id);
+    if (newAlpha <= "h") {
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (rook.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(myElement.id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  collided = false;
+  i = 1;
+  while (!collided) {
+    let newAlpha = String.fromCharCode(pos[0].charCodeAt(0) - i);
+    let id = newAlpha + pos[1];
+    let myElement = document.getElementById(id);
+    if (newAlpha >= "a") {
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (rook.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(myElement.id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  availableMoves.forEach((id) => {
+    highlightedPlaces.push(id);
+    document.getElementById(id).classList.add("highlight");
+    document.getElementById(id).addEventListener("click", move);
+  });
+}
+
 function move() {
   removeAllEvents();
   removeHighlightedPlaces();
@@ -506,6 +582,8 @@ function move() {
 }
 
 function destroy() {
+  removeHighlightedPlaces();
+  removeAllEvents();
   let currentPos = currentPiece.boardPlace;
   let newPos = this.id;
   for (let i = 0; i < collectionOfPieces.length; i++) {
@@ -517,6 +595,7 @@ function destroy() {
   let myElement = document.getElementById(currentPos);
   let deadElement = document.getElementById(newPos);
   myElement.removeChild(myElement.children[0]);
+  myElement.removeAttribute("has-piece");
   deadElement.removeChild(deadElement.children[0]);
   currentPiece.boardPlace = newPos;
   let newPiece = document.createElement("img");
@@ -541,7 +620,7 @@ function destroy() {
         newPiece.src = "../sprites/WhiteQueen.png";
         break;
     }
-    document.getElementById(newPos).setAttribute("has-piece", "white");
+    deadElement.setAttribute("has-piece", "white");
   } else {
     switch (currentPiece.pieceType) {
       case "pawn":
@@ -563,12 +642,11 @@ function destroy() {
         newPiece.src = "../sprites/BlackQueen.png";
         break;
     }
-    document.getElementById(newPos).setAttribute("has-piece", "black");
+    deadElement.setAttribute("has-piece", "black");
   }
   newPiece.classList.add("resize");
   deadElement.appendChild(newPiece);
-  removeHighlightedPlaces();
-  removeAllEvents();
+
   initalizePieces();
 }
 
@@ -587,10 +665,11 @@ function findPossibleMoves() {
       break;
     case "bishop":
       currentPiece = selectedPiece;
-      findRookMoves(selectedPiece);
+
       break;
     case "rook":
       currentPiece = selectedPiece;
+      findRookMoves(selectedPiece);
       break;
     case "king":
       currentPiece = selectedPiece;

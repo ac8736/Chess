@@ -9,6 +9,8 @@ const tes = () => {
   return a + b;
 };
 
-if ("i" > "g") {
+if ("5" > "2") {
   console.log("true");
+} else {
+  console.log("false");
 }
