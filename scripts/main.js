@@ -98,7 +98,6 @@ function removeAllEvents() {
 }
 
 function possiblePawnMoves(pawn) {
-  removeHighlightedPlaces();
   let availableMoves = [];
   if (pawn.color == "white") {
     const topleft = () => {
@@ -120,10 +119,7 @@ function possiblePawnMoves(pawn) {
     if (topleft() != "") {
       let myElement = document.getElementById(topleft());
       if (myElement.children.length != 0) {
-        if (
-          myElement.children[0].tagName == "IMG" &&
-          myElement.getAttribute("has-piece") == "black"
-        ) {
+        if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "black") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
           myElement.removeEventListener("click", findPossibleMoves);
@@ -134,10 +130,7 @@ function possiblePawnMoves(pawn) {
     if (topright() != "") {
       let myElement = document.getElementById(topright());
       if (myElement.children.length != 0) {
-        if (
-          myElement.children[0].tagName == "IMG" &&
-          myElement.getAttribute("has-piece") == "black"
-        ) {
+        if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "black") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
           myElement.removeEventListener("click", findPossibleMoves);
@@ -166,10 +159,7 @@ function possiblePawnMoves(pawn) {
     if (bottomleft() != "") {
       let myElement = document.getElementById(bottomleft());
       if (myElement.children.length != 0) {
-        if (
-          myElement.children[0].tagName == "IMG" &&
-          myElement.getAttribute("has-piece") == "white"
-        ) {
+        if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "white") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
           myElement.removeEventListener("click", findPossibleMoves);
@@ -180,10 +170,7 @@ function possiblePawnMoves(pawn) {
     if (bottomright() != "") {
       let myElement = document.getElementById(bottomright());
       if (myElement.children.length != 0) {
-        if (
-          myElement.children[0].tagName == "IMG" &&
-          myElement.getAttribute("has-piece") == "white"
-        ) {
+        if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "white") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
           myElement.removeEventListener("click", findPossibleMoves);
@@ -193,22 +180,10 @@ function possiblePawnMoves(pawn) {
     }
   }
   if (pawn.boardPlace[1] === "2" && pawn.color == "white") {
-    if (
-      document.getElementById(
-        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
-      ).children.length == 0
-    ) {
-      availableMoves.push(
-        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
-      );
-      if (
-        document.getElementById(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString()
-        );
+    if (document.getElementById((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()).children.length == 0) {
+      availableMoves.push((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString());
+      if (document.getElementById((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString()).children.length == 0) {
+        availableMoves.push((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 2)).toString());
       }
     }
     if (availableMoves.length != 0) {
@@ -220,22 +195,10 @@ function possiblePawnMoves(pawn) {
     }
     return;
   } else if (pawn.boardPlace[1] === "7" && pawn.color == "black") {
-    if (
-      document.getElementById(
-        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
-      ).children.length == 0
-    ) {
-      availableMoves.push(
-        (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
-      );
-      if (
-        document.getElementById(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString()
-        );
+    if (document.getElementById((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()).children.length == 0) {
+      availableMoves.push((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString());
+      if (document.getElementById((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString()).children.length == 0) {
+        availableMoves.push((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 2)).toString());
       }
     }
     if (availableMoves.length != 0) {
@@ -248,24 +211,12 @@ function possiblePawnMoves(pawn) {
     return;
   } else if (pawn.boardPlace[1] !== "2" || pawn.boardPlace[1] !== "7") {
     if (pawn.color == "white") {
-      if (
-        document.getElementById(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()
-        );
+      if (document.getElementById((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString()).children.length == 0) {
+        availableMoves.push((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) + 1)).toString());
       }
     } else {
-      if (
-        document.getElementById(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
-        ).children.length == 0
-      ) {
-        availableMoves.push(
-          (pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()
-        );
+      if (document.getElementById((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString()).children.length == 0) {
+        availableMoves.push((pawn.boardPlace[0] + (parseInt(pawn.boardPlace[1]) - 1)).toString());
       }
     }
     availableMoves.forEach((id) => {
@@ -277,7 +228,6 @@ function possiblePawnMoves(pawn) {
 }
 
 function findKnightMoves(knight) {
-  removeHighlightedPlaces();
   let availableMoves = [];
   let numPlace = parseInt(knight.boardPlace[1]);
   let alphaPlace = knight.boardPlace[0];
@@ -285,10 +235,7 @@ function findKnightMoves(knight) {
   if (numPlace + 2 < 9) {
     // good
     if (String.fromCharCode(alphaPlace.charCodeAt(0) + 1) <= "h") {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
-          (numPlace + 2).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) + 1) + (numPlace + 2).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -299,10 +246,7 @@ function findKnightMoves(knight) {
       }
     }
     if (String.fromCharCode(alphaPlace.charCodeAt(0) - 1) >= "a") {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
-          (numPlace + 2).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) - 1) + (numPlace + 2).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -317,10 +261,7 @@ function findKnightMoves(knight) {
   if (numPlace - 2 > 0) {
     // good
     if (String.fromCharCode(alphaPlace.charCodeAt(0) + 1) <= "h") {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) + 1) +
-          (numPlace - 2).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) + 1) + (numPlace - 2).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -331,10 +272,7 @@ function findKnightMoves(knight) {
       }
     }
     if (String.fromCharCode(alphaPlace.charCodeAt(0) - 1) >= "a") {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) - 1) +
-          (numPlace - 2).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) - 1) + (numPlace - 2).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -349,10 +287,7 @@ function findKnightMoves(knight) {
   if (String.fromCharCode(alphaPlace.charCodeAt(0) + 2) <= "h") {
     // good
     if (numPlace + 1 < 9) {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
-          (numPlace + 1).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) + 2) + (numPlace + 1).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -363,10 +298,7 @@ function findKnightMoves(knight) {
       }
     }
     if (numPlace - 1 > 0) {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) + 2) +
-          (numPlace - 1).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) + 2) + (numPlace - 1).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -380,10 +312,7 @@ function findKnightMoves(knight) {
 
   if (String.fromCharCode(alphaPlace.charCodeAt(0) - 2) >= "a") {
     if (numPlace + 1 < 9) {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
-          (numPlace + 1).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) - 2) + (numPlace + 1).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -394,10 +323,7 @@ function findKnightMoves(knight) {
       }
     }
     if (numPlace - 1 > 0) {
-      var myElement = document.getElementById(
-        String.fromCharCode(alphaPlace.charCodeAt(0) - 2) +
-          (numPlace - 1).toString()
-      );
+      var myElement = document.getElementById(String.fromCharCode(alphaPlace.charCodeAt(0) - 2) + (numPlace - 1).toString());
       if (myElement.children.length == 0) {
         availableMoves.push(myElement.id);
       } else if (knight.color != myElement.getAttribute("has-piece")) {
@@ -417,7 +343,6 @@ function findKnightMoves(knight) {
 }
 
 function findRookMoves(rook) {
-  removeHighlightedPlaces();
   let availableMoves = [];
   let collided = false;
   let pos = rook.boardPlace;
@@ -511,6 +436,219 @@ function findRookMoves(rook) {
       collided = true;
     }
     i++;
+  }
+  availableMoves.forEach((id) => {
+    highlightedPlaces.push(id);
+    document.getElementById(id).classList.add("highlight");
+    document.getElementById(id).addEventListener("click", move);
+  });
+}
+
+function findBishopMoves(bishop) {
+  let availableMoves = [];
+  let pos = bishop.boardPlace;
+  let i = 1;
+  let collided = false;
+  while (!collided) {
+    let newAlpha = String.fromCharCode(pos[0].charCodeAt(0) + i);
+    let newNum = (parseInt(pos[1]) + i).toString();
+    let id = newAlpha + newNum;
+    if (newAlpha <= "h" && newNum <= "8") {
+      let myElement = document.getElementById(id);
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (bishop.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  i = 1;
+  collided = false;
+  while (!collided) {
+    let newAlpha = String.fromCharCode(pos[0].charCodeAt(0) - i);
+    let newNum = (parseInt(pos[1]) - i).toString();
+    let id = newAlpha + newNum;
+    if (newAlpha >= "a" && newNum >= "1") {
+      let myElement = document.getElementById(id);
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (bishop.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  i = 1;
+  collided = false;
+  while (!collided) {
+    let newAlpha = String.fromCharCode(pos[0].charCodeAt(0) - i);
+    let newNum = (parseInt(pos[1]) + i).toString();
+    let id = newAlpha + newNum;
+    if (newAlpha >= "a" && newNum <= "8") {
+      let myElement = document.getElementById(id);
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (bishop.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  i = 1;
+  collided = false;
+  while (!collided) {
+    let newAlpha = String.fromCharCode(pos[0].charCodeAt(0) + i);
+    let newNum = (parseInt(pos[1]) - i).toString();
+    let id = newAlpha + newNum;
+    if (newAlpha <= "h" && newNum >= "1") {
+      let myElement = document.getElementById(id);
+      if (myElement.children.length == 0) {
+        availableMoves.push(id);
+      } else {
+        collided = true;
+        if (bishop.color != myElement.getAttribute("has-piece")) {
+          myElement.classList.add("red-highlight");
+          myElement.addEventListener("click", destroy);
+          myElement.removeEventListener("click", findPossibleMoves);
+          highlightedPlaces.push(id);
+        }
+      }
+    } else {
+      collided = true;
+    }
+    i++;
+  }
+  availableMoves.forEach((id) => {
+    highlightedPlaces.push(id);
+    document.getElementById(id).classList.add("highlight");
+    document.getElementById(id).addEventListener("click", move);
+  });
+}
+
+function findKingMoves(king) {
+  let availableMoves = [];
+  let newPos;
+  let currentPos = king.boardPlace;
+  if (String.fromCharCode(currentPos[0].charCodeAt(0) + 1) <= "h" && (parseInt(currentPos[1]) + 1).toString() <= "8") {
+    newPos = String.fromCharCode(currentPos[0].charCodeAt(0) + 1) + (parseInt(currentPos[1]) + 1).toString();
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if (String.fromCharCode(currentPos[0].charCodeAt(0) - 1) >= "a" && (parseInt(currentPos[1]) - 1).toString() >= "1") {
+    newPos = String.fromCharCode(currentPos[0].charCodeAt(0) - 1) + (parseInt(currentPos[1]) - 1).toString();
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if (String.fromCharCode(currentPos[0].charCodeAt(0) + 1) <= "h" && (parseInt(currentPos[1]) - 1).toString() >= "1") {
+    newPos = String.fromCharCode(currentPos[0].charCodeAt(0) + 1) + (parseInt(currentPos[1]) - 1).toString();
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if (String.fromCharCode(currentPos[0].charCodeAt(0) - 1) >= "a" && (parseInt(currentPos[1]) + 1).toString() <= "8") {
+    newPos = String.fromCharCode(currentPos[0].charCodeAt(0) - 1) + (parseInt(currentPos[1]) + 1).toString();
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if (String.fromCharCode(currentPos[0].charCodeAt(0) - 1) >= "a") {
+    newPos = String.fromCharCode(currentPos[0].charCodeAt(0) - 1) + currentPos[1];
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if (String.fromCharCode(currentPos[0].charCodeAt(0) + 1) <= "h") {
+    newPos = String.fromCharCode(currentPos[0].charCodeAt(0) + 1) + currentPos[1];
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if ((parseInt(currentPos[1]) + 1).toString() <= "8") {
+    newPos = currentPos[0] + (parseInt(currentPos[1]) + 1).toString();
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
+  }
+  if ((parseInt(currentPos[1]) - 1).toString() >= "1") {
+    newPos = currentPos[0] + (parseInt(currentPos[1]) - 1).toString();
+    let myElement = document.getElementById(newPos);
+    if (myElement.children.length == 0) {
+      availableMoves.push(newPos);
+    } else if (king.color != myElement.getAttribute("has-piece")) {
+      myElement.classList.add("red-highlight");
+      myElement.addEventListener("click", destroy);
+      myElement.removeEventListener("click", findPossibleMoves);
+      highlightedPlaces.push(newPos);
+    }
   }
   availableMoves.forEach((id) => {
     highlightedPlaces.push(id);
@@ -646,35 +784,41 @@ function destroy() {
   }
   newPiece.classList.add("resize");
   deadElement.appendChild(newPiece);
-
   initalizePieces();
 }
 
 function findPossibleMoves() {
-  const selectedPiece = collectionOfPieces.find(
-    (element) => element.boardPlace === this.id
-  );
+  const selectedPiece = collectionOfPieces.find((element) => element.boardPlace === this.id);
   switch (selectedPiece.pieceType) {
     case "pawn":
       currentPiece = selectedPiece;
+      removeHighlightedPlaces();
       possiblePawnMoves(selectedPiece);
       break;
     case "knight":
       currentPiece = selectedPiece;
+      removeHighlightedPlaces();
       findKnightMoves(selectedPiece);
       break;
     case "bishop":
       currentPiece = selectedPiece;
-
+      removeHighlightedPlaces();
+      findBishopMoves(selectedPiece);
       break;
     case "rook":
       currentPiece = selectedPiece;
+      removeHighlightedPlaces();
       findRookMoves(selectedPiece);
       break;
     case "king":
       currentPiece = selectedPiece;
+      removeHighlightedPlaces();
+      findKingMoves(selectedPiece);
       break;
     case "queen":
+      removeHighlightedPlaces();
+      findBishopMoves(selectedPiece);
+      findRookMoves(selectedPiece);
       currentPiece = selectedPiece;
       break;
   }
