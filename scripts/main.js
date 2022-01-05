@@ -73,8 +73,49 @@ const collectionOfPieces = [
   blackQueen,
 ];
 
+var whitesTurn = true;
 var highlightedPlaces = [];
 var currentPiece;
+
+function initializeGameTurn() {
+  if (whitesTurn) {
+    initializeWhitePieces();
+    removeAllBlackEvents();
+  } else {
+    initializeBlackPieces();
+    removeAllWhiteEvents();
+  }
+}
+
+function removeAllWhiteEvents() {
+  var whitePieces = document.querySelectorAll("div[has-piece='white']");
+  whitePieces.forEach((element) => {
+    element.removeEventListener("click", findPossibleMoves);
+  });
+}
+
+function removeAllBlackEvents() {
+  var blackPieces = document.querySelectorAll("div[has-piece='black']");
+  blackPieces.forEach((element) => {
+    element.removeEventListener("click", findPossibleMoves);
+  });
+}
+
+function initializeWhitePieces() {
+  var allWhitePieces = document.querySelectorAll("div[has-piece='white']");
+  allWhitePieces.forEach(function (element) {
+    findPossibleMoves.bind(element);
+    element.addEventListener("click", findPossibleMoves);
+  });
+}
+
+function initializeBlackPieces() {
+  var allBlackPieces = document.querySelectorAll("div[has-piece='black']");
+  allBlackPieces.forEach(function (element) {
+    findPossibleMoves.bind(element);
+    element.addEventListener("click", findPossibleMoves);
+  });
+}
 
 function removeHighlightedPlaces() {
   if (highlightedPlaces.length !== 0) {
@@ -122,7 +163,6 @@ function possiblePawnMoves(pawn) {
         if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "black") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(topleft());
         }
       }
@@ -133,7 +173,6 @@ function possiblePawnMoves(pawn) {
         if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "black") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(topright());
         }
       }
@@ -162,7 +201,6 @@ function possiblePawnMoves(pawn) {
         if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "white") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(bottomleft());
         }
       }
@@ -173,7 +211,6 @@ function possiblePawnMoves(pawn) {
         if (myElement.children[0].tagName == "IMG" && myElement.getAttribute("has-piece") == "white") {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(bottomright());
         }
       }
@@ -241,7 +278,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -252,7 +288,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -267,7 +302,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -278,7 +312,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -293,7 +326,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -304,7 +336,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -318,7 +349,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -329,7 +359,6 @@ function findKnightMoves(knight) {
       } else if (knight.color != myElement.getAttribute("has-piece")) {
         myElement.classList.add("red-highlight");
         myElement.addEventListener("click", destroy);
-        myElement.removeEventListener("click", findPossibleMoves);
         highlightedPlaces.push(myElement.id);
       }
     }
@@ -359,7 +388,6 @@ function findRookMoves(rook) {
         if (rook.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(myElement.id);
         }
       }
@@ -382,7 +410,6 @@ function findRookMoves(rook) {
         if (rook.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(myElement.id);
         }
       }
@@ -405,7 +432,6 @@ function findRookMoves(rook) {
         if (rook.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(myElement.id);
         }
       }
@@ -428,7 +454,6 @@ function findRookMoves(rook) {
         if (rook.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(myElement.id);
         }
       }
@@ -462,7 +487,6 @@ function findBishopMoves(bishop) {
         if (bishop.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(id);
         }
       }
@@ -486,7 +510,6 @@ function findBishopMoves(bishop) {
         if (bishop.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(id);
         }
       }
@@ -510,7 +533,6 @@ function findBishopMoves(bishop) {
         if (bishop.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(id);
         }
       }
@@ -534,7 +556,6 @@ function findBishopMoves(bishop) {
         if (bishop.color != myElement.getAttribute("has-piece")) {
           myElement.classList.add("red-highlight");
           myElement.addEventListener("click", destroy);
-          myElement.removeEventListener("click", findPossibleMoves);
           highlightedPlaces.push(id);
         }
       }
@@ -562,7 +583,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -574,7 +594,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -586,7 +605,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -598,7 +616,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -610,7 +627,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -622,7 +638,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -634,7 +649,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -646,7 +660,6 @@ function findKingMoves(king) {
     } else if (king.color != myElement.getAttribute("has-piece")) {
       myElement.classList.add("red-highlight");
       myElement.addEventListener("click", destroy);
-      myElement.removeEventListener("click", findPossibleMoves);
       highlightedPlaces.push(newPos);
     }
   }
@@ -658,6 +671,11 @@ function findKingMoves(king) {
 }
 
 function move() {
+  if (whitesTurn) {
+    whitesTurn = false;
+  } else {
+    whitesTurn = true;
+  }
   removeAllEvents();
   removeHighlightedPlaces();
   let currentPos = currentPiece.boardPlace;
@@ -715,11 +733,16 @@ function move() {
     }
     newPiece.classList.add("resize");
     document.getElementById(newPos).appendChild(newPiece);
-    initalizePieces();
+    initializeGameTurn();
   }
 }
 
 function destroy() {
+  if (whitesTurn) {
+    whitesTurn = false;
+  } else {
+    whitesTurn = true;
+  }
   removeHighlightedPlaces();
   removeAllEvents();
   let currentPos = currentPiece.boardPlace;
@@ -784,11 +807,12 @@ function destroy() {
   }
   newPiece.classList.add("resize");
   deadElement.appendChild(newPiece);
-  initalizePieces();
+  initializeGameTurn();
 }
 
 function findPossibleMoves() {
   const selectedPiece = collectionOfPieces.find((element) => element.boardPlace === this.id);
+
   switch (selectedPiece.pieceType) {
     case "pawn":
       currentPiece = selectedPiece;
@@ -825,18 +849,4 @@ function findPossibleMoves() {
   return;
 }
 
-function initalizePieces() {
-  var allWhitePieces = document.querySelectorAll("div[has-piece='white']");
-  allWhitePieces.forEach(function (element) {
-    findPossibleMoves.bind(element);
-    element.addEventListener("click", findPossibleMoves);
-  });
-
-  var allBlackPieces = document.querySelectorAll("div[has-piece='black']");
-  allBlackPieces.forEach(function (element) {
-    findPossibleMoves.bind(element);
-    element.addEventListener("click", findPossibleMoves);
-  });
-}
-
-window.onload = initalizePieces;
+window.onload = initializeGameTurn;

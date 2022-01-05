@@ -1,3 +1,17 @@
+body {
+  background-color: burlywood;
+}
+
+header {
+  font-family: cursive;
+  text-align: center;
+}
+
+h1 {
+  margin: 17px;
+  font-weight: bold;
+}
+
 p {
   margin: 0;
   font-family: fantasy;
@@ -5,6 +19,8 @@ p {
 }
 
 #chess-game-container {
+  position: relative;
+  top: 20px;
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(8, 60px);
@@ -26,7 +42,7 @@ p {
   height: 515px;
   position: absolute;
   left: 697px;
-  bottom: 459px;
+  bottom: 359px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -36,6 +52,7 @@ p {
 #alphabet-list {
   width: 529px;
   position: absolute;
+  top: 585px;
   left: 697px;
   margin: auto;
   padding-top: 12px;
